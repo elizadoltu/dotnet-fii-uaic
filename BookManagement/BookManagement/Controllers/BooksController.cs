@@ -29,5 +29,27 @@ namespace BookManagement.Controllers
         {
             return await mediator.Send(new GetBookByIdQuery { Id = id });
         }
+        [HttpDelete("{id:guid}")]
+        public async Task<ActionResult> DeleteBook(Guid id)
+        {
+            await mediator.Send(new DeleteBookCommand { Id = id });
+            return NoContent(); 
+        }
+        [HttpPut("{id:guid}")]
+        public async Task<ActionResult> UpdateBook(Guid id, UpdateBookCommand command)
+        {
+            if (id != command.Id)
+            {
+                return BadRequest();
+            }
+            await mediator.Send(command);
+            return NoContent();
+        }
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<BookDto>>> GetAllBooks()
+        {
+            var books = await mediator.Send(new GetAllBooksQuery());
+            return Ok(books);
+        }
     }
 }

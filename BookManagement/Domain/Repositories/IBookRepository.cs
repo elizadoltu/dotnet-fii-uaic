@@ -9,5 +9,6 @@ namespace Domain.Repositories
         Task<Guid> AddAsync(Book book);
         Task UpdateAsync(Book book);
         Task DeleteAsync(Guid id);
+        Task DeleteAsync(object id);
     }
 }
